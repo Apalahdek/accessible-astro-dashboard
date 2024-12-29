@@ -6,36 +6,31 @@ import { Icon } from 'astro-icon'
 ---
 
 <LoginLayout title="Login">
-  <section class="bg-neutral-100">
-    <div class="login">
-      <div class="login__inner reveal h-screen">
-        <div class="inner__brand">
-          <div class="bg-neutral-900 radius-large space-8">
-            <img
-              class="brand__logo radius-large"
-              src="/astro-logo.svg"
-              alt=""
-            >
+  <section class="bg-neutral-100 h-full">
+    <div class="login h-full flex justify-center items-center">
+      <div class="login__inner bg-white radius-large shadow-lg p-8 max-w-lg w-full space-content">
+        <div class="inner__brand flex flex-col items-center text-center mb-8">
+          <div class="bg-neutral-900 radius-large p-4">
+            <img class="brand__logo radius-large" src="/astro-logo.svg" alt="Logo">
           </div>
-          <div class="brand__text">
-            <span>Astro Dashboard</span>
-            <span>An Accessible Astro Theme</span>
+          <div class="brand__text mt-4">
+            <span class="text-lg font-bold">Astro Dashboard</span>
+            <span class="text-sm text-neutral-500">An Accessible Astro Theme</span>
           </div>
         </div>
+
         <div class="inner__form space-content">
           <Notification>
             <Icon pack="majesticons" name="information-circle-line" /><p class="size-14">Log in using <strong>admin@astro.demo</strong> and <strong>Astronaut570</strong>.</p>          
           </Notification>
-          <div class="space-content">
-            <h1>Login</h1>
-            <LoginForm />
-          </div>
+          <h1 class="text-2xl font-semibold text-center mb-6">Login</h1>
+          <LoginForm />
         </div>
-        <div class="login__footer text-neutral-700">
+
+        <div class="login__footer text-neutral-700 text-center mt-8">
           <p><em>Build fast dashboards, faster.</em></p>
         </div>
       </div>
-      <div class="login__background h-screen" />
     </div>
   </section>
 </LoginLayout>
@@ -46,66 +41,59 @@ import { Icon } from 'astro-icon'
   @use '../assets/scss/base/space' as *;
 
   .login {
-    display: grid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--neutral-100);
+  }
+
+  .login__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: $space-24;
+    padding: $space-24;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 
     @include breakpoint(medium) {
-      grid-template-columns: 550px 2fr;
-    }
-
-    .login__inner {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: $space-48;
-      padding: $space-24;
-      z-index: 1;
-      
-      @include breakpoint(medium) {
-        padding: $space-48 $space-96;
-        box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
-      }
+      padding: $space-48;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
     }
 
     .inner__brand {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: $space-16;
+      text-align: center;
     }
 
     .brand__logo {
       max-width: 50px;
+      margin-bottom: 16px;
     }
 
     .brand__text {
       display: flex;
       flex-direction: column;
-      gap: $space-2;
+      gap: 4px;
 
       > :first-child {
         font-weight: bold;
-        @include size-20;
+        font-size: 1.125rem;
       }
 
       > :last-child {
-        @include size-14;
+        font-size: 0.875rem;
+        color: var(--neutral-500);
       }
     }
 
-    .login__background {
-      display: none;
-      background-color: #000;
-      background-image: url("/login-background.webp");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-
-      @include breakpoint(medium) {
-        display: block;
-      }
-    }
-
-    .reveal {
-      animation: reveal 0.3s ease-in;
+    .inner__form {
+      width: 100%;
     }
 
     .login__footer {
@@ -114,6 +102,61 @@ import { Icon } from 'astro-icon'
       @include breakpoint(medium) {
         padding-bottom: 0;
       }
+    }
+  }
+
+  .login__inner input {
+    width: 100%;
+    padding: $space-8;
+    margin-bottom: $space-8;
+    border: 2px solid var(--neutral-300);
+    border-radius: 0.5rem;
+    transition: border 0.3s ease;
+  }
+
+  .login__inner input:focus {
+    border-color: var(--primary-500);
+    outline: none;
+  }
+
+  .login__inner button {
+    padding: $space-12;
+    width: 100%;
+    background-color: var(--primary-500);
+    color: white;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .login__inner button:hover {
+    background-color: var(--primary-600);
+  }
+
+  .login__inner a {
+    color: var(--primary-500);
+    text-decoration: none;
+    font-size: 0.875rem;
+    text-align: center;
+    display: block;
+    margin-top: 1rem;
+  }
+
+  .login__inner a:hover {
+    text-decoration: underline;
+  }
+
+  .login__background {
+    display: none;
+    background-color: #000;
+    background-image: url("/login-background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    @include breakpoint(medium) {
+      display: block;
     }
   }
 
