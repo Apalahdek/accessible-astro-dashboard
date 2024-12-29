@@ -2,7 +2,8 @@
 const {
   number = 0,
   title = 'Remaining Requests',
-  type = 'success'
+  type = 'success',
+  showRemainingRequests = true // Menentukan apakah menampilkan Remaining Requests atau Max Requests
 } = Astro.props
 ---
 
@@ -16,12 +17,22 @@ const {
 </div>
 
 <script>
-  // Fetching the remaining_requests from localStorage
-  const remainingRequests = localStorage.getItem('remainingRequests') || 0;
+  // Menentukan apakah mengambil remainingRequests atau maxRequests berdasarkan prop
+  const isRemainingRequests = {showRemainingRequests};
+  
+  let requestCount = 0;
 
-  // Set the widget number dynamically with the remaining_requests value
+  if (isRemainingRequests) {
+    // Mengambil nilai remainingRequests dari localStorage
+    requestCount = localStorage.getItem('remainingRequests') || 0;
+  } else {
+    // Mengambil nilai maxRequests dari localStorage
+    requestCount = localStorage.getItem('maxRequests') || 0;
+  }
+
+  // Mengatur nilai widget dengan jumlah request yang sesuai
   const widgetNumber = document.querySelector('.dashboard-widget .size-48 strong');
-  widgetNumber.textContent = remainingRequests;
+  widgetNumber.textContent = requestCount;
 </script>
 
 <style lang="scss">
