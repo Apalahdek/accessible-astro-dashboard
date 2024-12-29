@@ -16,10 +16,10 @@ const {
 </div>
 
 <script>
-  // Fetching the remaining requests from localStorage
+  // Fetching the remaining_requests from localStorage
   const remainingRequests = localStorage.getItem('remainingRequests') || 0;
 
-  // Set the widget number dynamically with the remaining requests
+  // Set the widget number dynamically with the remaining_requests value
   const widgetNumber = document.querySelector('.dashboard-widget .size-48 strong');
   widgetNumber.textContent = remainingRequests;
 </script>
