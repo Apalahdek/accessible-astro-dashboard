@@ -1,6 +1,7 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro'
 import DashboardWidget from '../components/DashboardWidget.astro';
+import MaxRequest from '../components/MaxRequest.astro';
 ---
 
 <DefaultLayout title="Dashboard">
@@ -16,10 +17,7 @@ import DashboardWidget from '../components/DashboardWidget.astro';
       </div>
       <div class="grid small-grid-1 medium-grid-2 large-grid-3 equal-height">
         <DashboardWidget />
-        <DashboardWidget
-          number="+33"
-          title="Products sold"
-        />
+        <MaxRequest />
         <DashboardWidget
           number="-120"
           title="Images deleted"
