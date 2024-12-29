@@ -15,17 +15,21 @@ import { Icon } from 'astro-icon'
           </div>
         </div>
 
-        <div class="form-container text-center space-y-6">
-          <Notification class="mb-4">
+        <div class="form-container space-y-6">
+          <Notification class="mb-6">
             <Icon pack="majesticons" name="information-circle-line" />
-            <p class="text-sm">Log in using <strong>admin@astro.demo</strong> and <strong>Astronaut570</strong>.</p>          
+            <p class="text-sm text-neutral-600">Log in using <strong>admin@astro.demo</strong> and <strong>Astronaut570</strong>.</p>
           </Notification>
           
           <h1 class="text-3xl font-semibold text-neutral-800">Login</h1>
 
+          <p class="text-neutral-600 text-lg leading-relaxed">
+            Please enter your API key below to access your dashboard. If you don't have an API key, contact your admin.
+          </p>
+
           <LoginForm />
-          
-          <div class="text-neutral-500 text-sm">
+
+          <div class="footer text-neutral-500 text-sm mt-6">
             <p><em>Build fast dashboards, faster.</em></p>
           </div>
         </div>
@@ -61,15 +65,23 @@ import { Icon } from 'astro-icon'
         margin-bottom: 1.5rem;
       }
     }
-    
+
     .form-container {
       h1 {
         font-size: 2rem;
         font-weight: 600;
         color: var(--neutral-800);
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        color: var(--neutral-600);
+        margin-bottom: 1.5rem;
       }
     }
-    
+
     button {
       background-color: var(--primary-500);
       color: #fff;
@@ -89,7 +101,7 @@ import { Icon } from 'astro-icon'
         box-shadow: 0 0 5px var(--primary-400);
       }
     }
-    
+
     input {
       width: 100%;
       padding: 1rem;
@@ -104,7 +116,7 @@ import { Icon } from 'astro-icon'
       border-color: var(--primary-500);
       outline: none;
     }
-    
+
     a {
       color: var(--primary-500);
       text-decoration: none;
