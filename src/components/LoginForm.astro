@@ -4,12 +4,12 @@ import { Icon } from 'astro-icon'
 ---
 
 <form class="login-form space-content" method="post">
-  <Notification class="notification" type="warning">
-    <Icon pack="majesticons" name="emoji-sad-line" /><p class="size-12">Invalid API key. Please try again.</p>
+  <Notification type="warning">
+    <Icon pack="majesticons" name="emoji-sad-line" /><p class="size-12">Incorrect API key. Please try again.</p>
   </Notification>
   <div class="login-form__controls">
     <label for="apikey">API Key</label>
-    <input type="text" name="apikey" required>
+    <input type="text" name="apikey" required id="apikey">
   </div>
   <button class="button color-secondary behavior-full" type="submit">Login</button>
 </form> 
@@ -34,10 +34,13 @@ import { Icon } from 'astro-icon'
     const data = await response.json()
 
     if (data.success) {
+      // Store remaining requests in localStorage
       localStorage.setItem('isLoggedIn', 'true')
-      window.location.href = '/'
+      localStorage.setItem('remainingRequests', data.remaining_requests) // Store remaining requests
+
+      window.location.href = '/' // Redirect to homepage or dashboard
     } else {
-      notification.style.display = 'flex'
+      notification.style.display = 'flex' // Show error notification
     }
   })
 </script>
@@ -60,16 +63,6 @@ import { Icon } from 'astro-icon'
     input {
       padding: $space-8;
       border: 2px solid var(--neutral-600);
-    }
-
-    .checkbox {
-      display: flex;
-      align-items: center;
-      gap: $space-4;
-
-      input {
-        width: auto;
-      }
     }
   }
 </style>
