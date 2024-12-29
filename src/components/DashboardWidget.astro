@@ -1,7 +1,7 @@
 ---
 const {
-  number = '+54',
-  title = 'New messages',
+  number = 0,
+  title = 'Remaining Requests',
   type = 'success'
 } = Astro.props
 ---
@@ -14,6 +14,15 @@ const {
     <em>{title}</em>
   </p>
 </div>
+
+<script>
+  // Fetching the remaining requests from localStorage
+  const remainingRequests = localStorage.getItem('remainingRequests') || 0;
+
+  // Set the widget number dynamically with the remaining requests
+  const widgetNumber = document.querySelector('.dashboard-widget .size-48 strong');
+  widgetNumber.textContent = remainingRequests;
+</script>
 
 <style lang="scss">
   .dashboard-widget {
