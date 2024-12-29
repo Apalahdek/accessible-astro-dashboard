@@ -1,5 +1,6 @@
 ---
 const {
+  number = 0,
   title = 'Remaining Requests',
   type = 'success'
 } = Astro.props
@@ -7,7 +8,7 @@ const {
 
 <div class="dashboard-widget radius-large space-24 elevation-400 space-content type-${type}">
   <p class="size-48">
-    <strong id="remaining-requests">0</strong>
+    <strong>{number}</strong>
   </p>
   <p class="size-20">
     <em>{title}</em>
@@ -15,42 +16,12 @@ const {
 </div>
 
 <script>
-  // Function to fetch remaining requests from API
-  async function fetchRemainingRequests() {
-    const apikey = localStorage.getItem('apikey'); // Get API key from localStorage
+  // Fetching the remaining requests from localStorage
+  const remainingRequests = localStorage.getItem('remainingRequests') || 0;
 
-    if (!apikey) {
-      console.error('API key not found');
-      return;
-    }
-
-    try {
-      // Fetch remaining requests using the stored API key
-      const response = await fetch(`https://api.jkt48connect.my.id/api/check-apikey/${apikey}`);
-
-      // Check if the response is successful
-      if (!response.ok) {
-        console.error('Failed to fetch from API. Status:', response.status);
-        return;
-      }
-
-      // Parse the JSON response
-      const data = await response.json();
-
-      if (data.success) {
-        // If API key is valid, update the widget with the remaining requests
-        const widgetNumber = document.getElementById('remaining-requests');
-        widgetNumber.textContent = data.remaining_requests || 'N/A'; // Default to 'N/A' if no remaining_requests
-      } else {
-        console.error('API key is invalid or response error:', data.message);
-      }
-    } catch (error) {
-      console.error('Error fetching remaining requests:', error);
-    }
-  }
-
-  // Call the function to fetch the remaining requests when the page loads
-  window.onload = fetchRemainingRequests;
+  // Set the widget number dynamically with the remaining requests
+  const widgetNumber = document.querySelector('.dashboard-widget .size-48 strong');
+  widgetNumber.textContent = remainingRequests;
 </script>
 
 <style lang="scss">
