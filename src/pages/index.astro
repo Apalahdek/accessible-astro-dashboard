@@ -26,6 +26,18 @@ import DefaultLayout from '../layouts/DefaultLayout.astro';
             <em>Max Requests</em>
           </p>
         </div>
+        <div class="dashboard-widget radius-large space-24 elevation-400 space-content type-info">
+          <p class="size-48" id="api-key">Loading...</p>
+          <p class="size-20">
+            <em>API Key</em>
+          </p>
+        </div>
+        <div class="dashboard-widget radius-large space-24 elevation-400 space-content type-warning">
+          <p class="size-48" id="expiry-date">Loading...</p>
+          <p class="size-20">
+            <em>Expiry Date</em>
+          </p>
+        </div>
         <div class="dashboard-widget radius-large space-24 elevation-400 space-content type-error">
           <p class="size-48">-120</p>
           <p class="size-20">
@@ -51,20 +63,26 @@ import DefaultLayout from '../layouts/DefaultLayout.astro';
   const date = new Date();
   document.querySelector('#current-time').innerHTML = `<em>${date.toDateString()}</em>`;
 
-  // Fetch and display remaining requests
+  // Fetch and display data from localStorage
   const remainingRequestsElement = document.querySelector('#remaining-requests');
   const maxRequestsElement = document.querySelector('#max-requests');
+  const apiKeyElement = document.querySelector('#api-key');
+  const expiryDateElement = document.querySelector('#expiry-date');
 
-  const fetchRequests = () => {
+  const fetchData = () => {
     const remainingRequests = localStorage.getItem('remainingRequests') || 'N/A';
     const maxRequests = localStorage.getItem('maxRequests') || 'N/A';
+    const apiKey = localStorage.getItem('apikey') || 'N/A';
+    const expiryDate = localStorage.getItem('expiryDate') || 'N/A';
 
     remainingRequestsElement.textContent = remainingRequests;
     maxRequestsElement.textContent = maxRequests;
+    apiKeyElement.textContent = apiKey;
+    expiryDateElement.textContent = expiryDate;
   };
 
   // Call the function to fetch data
-  fetchRequests();
+  fetchData();
 </script>
 
 <style>
@@ -87,6 +105,18 @@ import DefaultLayout from '../layouts/DefaultLayout.astro';
       }
     }
 
+    &.type-info {
+      > p:first-child {
+        color: var(--info-700);
+      }
+    }
+
+    &.type-warning {
+      > p:first-child {
+        color: var(--warning-700);
+      }
+    }
+
     &:hover {
       transform: translateY(-0.5rem);
     }
@@ -101,6 +131,14 @@ import DefaultLayout from '../layouts/DefaultLayout.astro';
 
     &.type-error > p:first-child {
       color: var(--error-400);
+    }
+
+    &.type-info > p:first-child {
+      color: var(--info-400);
+    }
+
+    &.type-warning > p:first-child {
+      color: var(--warning-400);
     }
   }
 </style>
