@@ -6,29 +6,28 @@ import { Icon } from 'astro-icon'
 ---
 
 <LoginLayout title="Login">
-  <section class="bg-neutral-100 h-full">
-    <div class="login h-full flex justify-center items-center">
-      <div class="login__inner bg-white radius-large shadow-lg p-8 max-w-lg w-full space-content">
-        <div class="inner__brand flex flex-col items-center text-center mb-8">
-          <div class="bg-neutral-900 radius-large p-4">
-            <img class="brand__logo radius-large" src="/astro-logo.svg" alt="Logo">
-          </div>
-          <div class="brand__text mt-4">
-            <span class="text-lg font-bold">Astro Dashboard</span>
-            <span class="text-sm text-neutral-500">An Accessible Astro Theme</span>
+  <section class="bg-gradient-to-r from-neutral-900 via-neutral-700 to-neutral-600 h-full">
+    <div class="login-container h-full flex justify-center items-center p-6">
+      <div class="login-card bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
+        <div class="brand-logo mb-8 text-center">
+          <div class="bg-neutral-900 p-6 rounded-full">
+            <img class="brand__logo max-w-xs" src="/astro-logo.svg" alt="Logo">
           </div>
         </div>
 
-        <div class="inner__form space-content">
-          <Notification>
-            <Icon pack="majesticons" name="information-circle-line" /><p class="size-14">Log in using <strong>admin@astro.demo</strong> and <strong>Astronaut570</strong>.</p>          
+        <div class="form-container text-center space-y-6">
+          <Notification class="mb-4">
+            <Icon pack="majesticons" name="information-circle-line" />
+            <p class="text-sm">Log in using <strong>admin@astro.demo</strong> and <strong>Astronaut570</strong>.</p>          
           </Notification>
-          <h1 class="text-2xl font-semibold text-center mb-6">Login</h1>
-          <LoginForm />
-        </div>
+          
+          <h1 class="text-3xl font-semibold text-neutral-800">Login</h1>
 
-        <div class="login__footer text-neutral-700 text-center mt-8">
-          <p><em>Build fast dashboards, faster.</em></p>
+          <LoginForm />
+          
+          <div class="text-neutral-500 text-sm">
+            <p><em>Build fast dashboards, faster.</em></p>
+          </div>
         </div>
       </div>
     </div>
@@ -37,114 +36,88 @@ import { Icon } from 'astro-icon'
 
 <style lang="scss">
   @use '../assets/scss/base/breakpoint' as *;
-  @use '../assets/scss/base/size' as *;
   @use '../assets/scss/base/space' as *;
 
-  .login {
+  .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: var(--neutral-100);
   }
 
-  .login__inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: $space-24;
-    padding: $space-24;
-    border-radius: 1rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  .login-card {
     background-color: #fff;
-
-    @include breakpoint(medium) {
-      padding: $space-48;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    }
-
-    .inner__brand {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .brand__logo {
-      max-width: 50px;
-      margin-bottom: 16px;
-    }
-
-    .brand__text {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-
-      > :first-child {
-        font-weight: bold;
-        font-size: 1.125rem;
-      }
-
-      > :last-child {
-        font-size: 0.875rem;
-        color: var(--neutral-500);
-      }
-    }
-
-    .inner__form {
-      width: 100%;
-    }
-
-    .login__footer {
-      padding-bottom: $space-24;
-
-      @include breakpoint(medium) {
-        padding-bottom: 0;
-      }
-    }
-  }
-
-  .login__inner input {
+    padding: $space-24;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    padding: $space-8;
-    margin-bottom: $space-8;
-    border: 2px solid var(--neutral-300);
-    border-radius: 0.5rem;
-    transition: border 0.3s ease;
-  }
-
-  .login__inner input:focus {
-    border-color: var(--primary-500);
-    outline: none;
-  }
-
-  .login__inner button {
-    padding: $space-12;
-    width: 100%;
-    background-color: var(--primary-500);
-    color: white;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .login__inner button:hover {
-    background-color: var(--primary-600);
-  }
-
-  .login__inner a {
-    color: var(--primary-500);
-    text-decoration: none;
-    font-size: 0.875rem;
+    max-width: 400px;
     text-align: center;
-    display: block;
-    margin-top: 1rem;
-  }
 
-  .login__inner a:hover {
-    text-decoration: underline;
+    .brand-logo {
+      img {
+        width: 100px;
+        object-fit: contain;
+        margin-bottom: 1.5rem;
+      }
+    }
+    
+    .form-container {
+      h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--neutral-800);
+      }
+    }
+    
+    button {
+      background-color: var(--primary-500);
+      color: #fff;
+      padding: 0.75rem;
+      width: 100%;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: var(--primary-600);
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 5px var(--primary-400);
+      }
+    }
+    
+    input {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.75rem;
+      border: 2px solid var(--neutral-300);
+      transition: border-color 0.3s ease;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: var(--primary-500);
+      outline: none;
+    }
+    
+    a {
+      color: var(--primary-500);
+      text-decoration: none;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+      display: block;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: var(--primary-600);
+        text-decoration: underline;
+      }
+    }
   }
 
   .login__background {
@@ -154,21 +127,14 @@ import { Icon } from 'astro-icon'
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
+    
     @include breakpoint(medium) {
       display: block;
     }
   }
 
-  @keyframes reveal {
-    0% {
-      opacity: 0;
-      transform: translateY(-1rem);
-    }
-
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Add Gradient Effect */
+  .bg-gradient-to-r {
+    background-image: linear-gradient(to right, var(--neutral-900), var(--neutral-700), var(--neutral-600));
   }
 </style>
