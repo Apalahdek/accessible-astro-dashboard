@@ -1,15 +1,14 @@
 ---
 const {
-  number = 0,
-  title = 'Remaining Requests',
-  type = 'success',
-  showRemainingRequests = true // Menentukan apakah menampilkan Remaining Requests atau Max Requests
+  title = 'Requests', // Default title
+  type = 'success',   // Default type (success/error)
+  keyType = 'remainingRequests' // Pilihan: 'remainingRequests' atau 'maxRequests'
 } = Astro.props
 ---
 
 <div class="dashboard-widget radius-large space-24 elevation-400 space-content type-${type}">
   <p class="size-48">
-    <strong>{number}</strong>
+    <strong id="request-value">Loading...</strong>
   </p>
   <p class="size-20">
     <em>{title}</em>
@@ -17,22 +16,24 @@ const {
 </div>
 
 <script>
-  // Menentukan apakah mengambil remainingRequests atau maxRequests berdasarkan prop
-  const isRemainingRequests = {showRemainingRequests};
-  
-  let requestCount = 0;
+  // Pilihan keyType ('remainingRequests' atau 'maxRequests')
+  const keyType = '{keyType}';
 
-  if (isRemainingRequests) {
-    // Mengambil nilai remainingRequests dari localStorage
-    requestCount = localStorage.getItem('remainingRequests') || 0;
-  } else {
-    // Mengambil nilai maxRequests dari localStorage
-    requestCount = localStorage.getItem('maxRequests') || 0;
-  }
+  // Mengambil elemen DOM tempat data akan ditampilkan
+  const requestValueElement = document.querySelector('#request-value');
 
-  // Mengatur nilai widget dengan jumlah request yang sesuai
-  const widgetNumber = document.querySelector('.dashboard-widget .size-48 strong');
-  widgetNumber.textContent = requestCount;
+  // Mendapatkan nilai dari localStorage berdasarkan keyType
+  const fetchRequestValue = () => {
+    const value = localStorage.getItem(keyType);
+    if (value) {
+      requestValueElement.textContent = value; // Menampilkan nilai dari localStorage
+    } else {
+      requestValueElement.textContent = 'N/A'; // Jika data tidak ditemukan
+    }
+  };
+
+  // Memanggil fungsi untuk mengambil nilai
+  fetchRequestValue();
 </script>
 
 <style lang="scss">
@@ -50,6 +51,14 @@ const {
     }
 
     background-color: var(--neutral-100);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-0.5rem);
+    }
   }
 
   :global(.darkmode .dashboard-widget) {
