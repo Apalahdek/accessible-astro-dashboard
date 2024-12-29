@@ -16,21 +16,16 @@ import { Icon } from 'astro-icon'
         </div>
 
         <div class="form-container space-y-6">
-          <Notification class="mb-6">
-            <Icon pack="majesticons" name="information-circle-line" />
-            <p class="text-sm text-neutral-600">Log in using <strong>admin@astro.demo</strong> and <strong>Astronaut570</strong>.</p>
-          </Notification>
-          
           <h1 class="text-3xl font-semibold text-neutral-800">Login</h1>
 
           <p class="text-neutral-600 text-lg leading-relaxed">
-            Please enter your API key below to access your dashboard. If you don't have an API key, contact your admin.
+            Enter your API key below to continue.
           </p>
 
           <LoginForm />
 
           <div class="footer text-neutral-500 text-sm mt-6">
-            <p><em>Build fast dashboards, faster.</em></p>
+            <p><em>Fast and efficient dashboards.</em></p>
           </div>
         </div>
       </div>
@@ -75,8 +70,7 @@ import { Icon } from 'astro-icon'
       }
 
       p {
-        font-size: 1.125rem;
-        line-height: 1.75rem;
+        font-size: 1rem;
         color: var(--neutral-600);
         margin-bottom: 1.5rem;
       }
@@ -139,14 +133,25 @@ import { Icon } from 'astro-icon'
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    
+
     @include breakpoint(medium) {
       display: block;
     }
   }
 
-  /* Add Gradient Effect */
+  /* Gradient Animation */
+  @keyframes gradientMove {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
+
   .bg-gradient-to-r {
     background-image: linear-gradient(to right, var(--neutral-900), var(--neutral-700), var(--neutral-600));
+    background-size: 200% 200%;
+    animation: gradientMove 10s ease infinite;
   }
 </style>
