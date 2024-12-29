@@ -27,22 +27,30 @@ const {
     try {
       // Fetch remaining requests using the stored API key
       const response = await fetch(`https://api.jkt48connect.my.id/api/check-apikey/${apikey}`);
+
+      // Check if the response is successful
+      if (!response.ok) {
+        console.error('Failed to fetch from API. Status:', response.status);
+        return;
+      }
+
+      // Parse the JSON response
       const data = await response.json();
 
       if (data.success) {
-        // Update the widget with the remaining requests
+        // If API key is valid, update the widget with the remaining requests
         const widgetNumber = document.getElementById('remaining-requests');
-        widgetNumber.textContent = data.remaining_requests;
+        widgetNumber.textContent = data.remaining_requests || 'N/A'; // Default to 'N/A' if no remaining_requests
       } else {
-        console.error('Invalid API key or failed request');
+        console.error('API key is invalid or response error:', data.message);
       }
     } catch (error) {
       console.error('Error fetching remaining requests:', error);
     }
   }
 
-  // Call the function to fetch the remaining requests
-  fetchRemainingRequests();
+  // Call the function to fetch the remaining requests when the page loads
+  window.onload = fetchRemainingRequests;
 </script>
 
 <style lang="scss">
