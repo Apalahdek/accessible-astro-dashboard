@@ -16,8 +16,8 @@ import MaxRequest from '../components/MaxRequest.astro';
         <p id="current-time" class="size-12"></p>
       </div>
       <div class="grid small-grid-1 medium-grid-2 large-grid-3 equal-height">
-        <DashboardWidget showRemainingRequests={true} />
-        <DashboardWidget showRemainingRequests={false} />
+        <DashboardWidget keyType="remainingRequests" title="Remaining Requests" type="success" />
+        <DashboardWidget keyType="maxRequests" title="Max Requests" type="success" />
         <DashboardWidget
           number="-120"
           title="Images deleted"
