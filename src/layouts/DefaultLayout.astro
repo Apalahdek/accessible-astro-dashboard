@@ -94,6 +94,7 @@ let subtitle = 'Accessible Astro Dashboard'
     position: absolute;
     top: 1rem;
     right: 3.5rem;
+    transition: right 0.3s ease;
 
     @include breakpoint(medium) {
       right: 1.15rem;
@@ -101,18 +102,58 @@ let subtitle = 'Accessible Astro Dashboard'
   }
 
   .admin-interface {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    height: 100vh;
+
     @include breakpoint(medium) {
-      display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 250px 1fr;
     }
 
     main {
       padding: 2rem;
-
+      transition: padding 0.3s ease;
+      
       @include breakpoint(medium) {
         margin-left: 60px;
         padding: 6rem;
       }
+    }
+  }
+
+  .menu-item a {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--neutral-900);
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: var(--primary-500);
+      color: #fff;
+    }
+
+    svg {
+      width: 20px;
+    }
+  }
+
+  .menu-item a span {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .menu-item a {
+      padding: 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .menu-item a span {
+      display: inline-block;
     }
   }
 </style>
