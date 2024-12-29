@@ -1,0 +1,59 @@
+---
+const {
+  number = 0,
+  title = 'Max Requests',
+  type = 'success'
+} = Astro.props
+---
+
+<div class="dashboard-widget radius-large space-24 elevation-400 space-content type-${type}">
+  <p class="size-48">
+    <strong>{number}</strong>
+  </p>
+  <p class="size-20">
+    <em>{title}</em>
+  </p>
+</div>
+
+<script>
+  // Fetching the max_requests from localStorage
+  const maxRequests = localStorage.getItem('maxRequests') || 0;
+
+  // Set the widget number dynamically with the max_requests value
+  const widgetNumber = document.querySelector('.dashboard-widget .size-48 strong');
+  widgetNumber.textContent = maxRequests;
+</script>
+
+<style lang="scss">
+  .dashboard-widget {
+    &.type-success {
+      > p:first-child {
+        color: var(--success-700);
+      }
+    }
+
+    &.type-error {
+      > p:first-child {
+        color: var(--error-700);
+      }
+    }
+
+    background-color: var(--neutral-100);
+  }
+
+  :global(.darkmode .dashboard-widget) {
+    background-color: var(--neutral-900);
+
+    &.type-success {
+      > p:first-child {
+        color: var(--success-400);
+      }
+    }
+
+    &.type-error {
+      > p:first-child {
+        color: var(--error-400);
+      }
+    }
+  }
+</style>
