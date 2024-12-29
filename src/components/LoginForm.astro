@@ -5,7 +5,8 @@ import { Icon } from 'astro-icon'
 
 <form class="login-form space-content" method="post">
   <Notification type="warning">
-    <Icon pack="majesticons" name="emoji-sad-line" /><p class="size-12">Incorrect API key. Please try again.</p>
+    <Icon pack="majesticons" name="emoji-sad-line" />
+    <p class="size-12">Incorrect API key. Please try again.</p>
   </Notification>
   <div class="login-form__controls">
     <label for="apikey">API Key</label>
@@ -15,32 +16,43 @@ import { Icon } from 'astro-icon'
 </form> 
 
 <script>
-  // variables
+  // Variables
   const form = document.querySelector('.login-form')
   const notification = form.querySelector('.notification')
   const apikeyInput = form.querySelector('input[name="apikey"]')
   const submitButton = form.querySelector('button')
 
-  // execution
+  // Hide notification by default
   notification.style.display = 'none'
 
+  // Add event listener to the submit button
   submitButton.addEventListener('click', async event => {
     event.preventDefault()
 
     const apikey = apikeyInput.value.trim()
 
-    // Checking the apikey with the API
-    const response = await fetch(`https://api.jkt48connect.my.id/api/check-apikey/${apikey}`)
-    const data = await response.json()
+    try {
+      // Checking the apikey with the API
+      const response = await fetch(`https://api.jkt48connect.my.id/api/check-apikey/${apikey}`)
+      const data = await response.json()
 
-    if (data.success) {
-      // Store remaining requests in localStorage
-      localStorage.setItem('isLoggedIn', 'true')
-      localStorage.setItem('remainingRequests', data.remaining_requests) // Store remaining requests
+      if (data.success) {
+        // Store all data in localStorage
+        localStorage.setItem('isLoggedIn', 'true')
+        localStorage.setItem('apikey', apikey)
+        localStorage.setItem('remainingRequests', data.remaining_requests)
+        localStorage.setItem('maxRequests', data.max_request)
+        localStorage.setItem('expiryDate', data.expiry_date)
 
-      window.location.href = '/' // Redirect to homepage or dashboard
-    } else {
-      notification.style.display = 'flex' // Show error notification
+        // Redirect to homepage or dashboard
+        window.location.href = '/'
+      } else {
+        // Show error notification
+        notification.style.display = 'flex'
+      }
+    } catch (error) {
+      console.error('Error validating API key:', error)
+      notification.style.display = 'flex'
     }
   })
 </script>
