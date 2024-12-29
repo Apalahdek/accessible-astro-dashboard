@@ -1,7 +1,5 @@
 ---
-import DefaultLayout from '../layouts/DefaultLayout.astro'
-import DashboardWidget from '../components/DashboardWidget.astro';
-import MaxRequest from '../components/MaxRequest.astro';
+import DefaultLayout from '../layouts/DefaultLayout.astro';
 ---
 
 <DefaultLayout title="Dashboard">
@@ -16,13 +14,24 @@ import MaxRequest from '../components/MaxRequest.astro';
         <p id="current-time" class="size-12"></p>
       </div>
       <div class="grid small-grid-1 medium-grid-2 large-grid-3 equal-height">
-        <DashboardWidget keyType="remainingRequests" title="Remaining Requests" type="success" />
-        <DashboardWidget keyType="maxRequests" title="Max Requests" type="success" />
-        <DashboardWidget
-          number="-120"
-          title="Images deleted"
-          type="error"
-        />
+        <div class="dashboard-widget radius-large space-24 elevation-400 space-content type-success">
+          <p class="size-48" id="remaining-requests">Loading...</p>
+          <p class="size-20">
+            <em>Remaining Requests</em>
+          </p>
+        </div>
+        <div class="dashboard-widget radius-large space-24 elevation-400 space-content type-success">
+          <p class="size-48" id="max-requests">Loading...</p>
+          <p class="size-20">
+            <em>Max Requests</em>
+          </p>
+        </div>
+        <div class="dashboard-widget radius-large space-24 elevation-400 space-content type-error">
+          <p class="size-48">-120</p>
+          <p class="size-20">
+            <em>Images Deleted</em>
+          </p>
+        </div>
         <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
         <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
         <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
@@ -38,6 +47,60 @@ import MaxRequest from '../components/MaxRequest.astro';
 </DefaultLayout>
 
 <script>
-  const date = new Date()
-  document.querySelector('#current-time').innerHTML = `<em>${date.toDateString()}</em>`
+  // Set the current time
+  const date = new Date();
+  document.querySelector('#current-time').innerHTML = `<em>${date.toDateString()}</em>`;
+
+  // Fetch and display remaining requests
+  const remainingRequestsElement = document.querySelector('#remaining-requests');
+  const maxRequestsElement = document.querySelector('#max-requests');
+
+  const fetchRequests = () => {
+    const remainingRequests = localStorage.getItem('remainingRequests') || 'N/A';
+    const maxRequests = localStorage.getItem('maxRequests') || 'N/A';
+
+    remainingRequestsElement.textContent = remainingRequests;
+    maxRequestsElement.textContent = maxRequests;
+  };
+
+  // Call the function to fetch data
+  fetchRequests();
 </script>
+
+<style>
+  .dashboard-widget {
+    background-color: var(--neutral-100);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+
+    &.type-success {
+      > p:first-child {
+        color: var(--success-700);
+      }
+    }
+
+    &.type-error {
+      > p:first-child {
+        color: var(--error-700);
+      }
+    }
+
+    &:hover {
+      transform: translateY(-0.5rem);
+    }
+  }
+
+  :global(.darkmode .dashboard-widget) {
+    background-color: var(--neutral-900);
+
+    &.type-success > p:first-child {
+      color: var(--success-400);
+    }
+
+    &.type-error > p:first-child {
+      color: var(--error-400);
+    }
+  }
+</style>
